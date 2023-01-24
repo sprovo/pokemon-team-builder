@@ -41,10 +41,10 @@ const server = new ApolloServer<MyContext>({
 // Ensure we wait for our server to start
 await server.start();
 
-app.use('/');
-app.use(cors<Request>());
-app.use(bodyParser.json());
 app.use(
+    '/',
+    cors<Request>(),
+    bodyParser.json(),
     expressMiddleware(server, {
         context: async ({ req }) => ({ token: req.headers.token }),
     }),
