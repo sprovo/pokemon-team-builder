@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"forceConsistentCasingInFileNames": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"./src/*"
+			]
+		}
+	},
+	"exclude": [
+		"node_modules"
+	]
+}
