@@ -1,6 +1,6 @@
 {
-  "name": "pokemon-team-builder-server",
-  "version": "1.0.0",
+  "name": "client",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,15 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "13.1.4",
-    "@types/node": "18.11.18",
-    "@types/react": "18.0.27",
-    "@types/react-dom": "18.0.10",
+    "@next/font": "13.1.5",
     "eslint": "8.32.0",
-    "eslint-config-next": "13.1.4",
-    "next": "13.1.4",
+    "eslint-config-next": "13.1.5",
+    "next": "13.1.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "typescript": "4.9.4"
+    "react-dom": "18.2.0"
   }
 }

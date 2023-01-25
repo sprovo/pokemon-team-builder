@@ -1,16 +1,9 @@
 {
     "extends": [
-        "sandricoprovo/typescript"
+        "sandricoprovo"
     ],
     "rules": {
-        "@typescript-eslint/indent": 0,
         "no-tabs": 0,
-        "@typescript-eslint/require-await": 0
-    },
-    "parserOptions": {
-        "parserOptions": [
-            "./client/tsconfig.json",
-            "./server/tsconfig.json"
-        ]
+        "implicit-arrow-linebreak": 0
     }
 }
