@@ -3,11 +3,11 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 
 import { generatePokemonModel } from './models/Pokemon.js';
 import { pokemonResolvers } from './resolvers/pokemon.js';
+import { Pokemon } from './schema.js';
 
 // Server context
 export const context = {
-    context: async ({ req }) => ({
-        token: req.headers?.token || '',
+    context: async () => ({
         models: {
             Pokemon: generatePokemonModel(),
         },
@@ -18,10 +18,12 @@ export const context = {
 export function createApolloServer(httpServer) {
     const server = new ApolloServer({
         typeDefs: `
-        type Query {
-            getPokemon: String!
-        }
-    `,
+            ${Pokemon}
+
+            type Query {
+                getPokemon(name: String): Pokemon
+            }
+        `,
         resolvers: {
             Query: {
                 getPokemon: pokemonResolvers.Queries.getPokemon,
