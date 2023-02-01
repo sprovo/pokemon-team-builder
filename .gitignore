@@ -183,4 +183,7 @@ psd
 thumb
 sketch
 
+### Redis ###
+dump.rdb
+
 # End of https://www.toptal.com/developers/gitignore/api/react,nextjs,node

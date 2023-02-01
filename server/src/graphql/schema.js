@@ -6,3 +6,10 @@ export const Pokemon = `
 		types: [String!]
 	}
 `;
+
+export const PokedexEntry = `
+	type PokedexEntry {
+		entryNumber: Int!
+		name: String!
+	},
+`;
