@@ -6,7 +6,11 @@ export default function parsePokemonObject(pokeObject) {
     const {
         name = '',
         order = undefined,
-        sprites: { front_default: frontDefault },
+        sprites: {
+            other: {
+                'official-artwork': { front_default: frontDefault },
+            },
+        },
         types = [],
     } = pokeObject;
 
