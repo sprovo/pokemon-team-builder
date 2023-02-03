@@ -1,11 +1,12 @@
 import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
 import Image from 'next/image';
 
-export function PokemonCard({ pokemon }) {
+export function PokemonCard({ pokemon, removePokemon }) {
     const { name, order, sprite, types = [] } = pokemon;
     return (
         <div className="bg-slate-600 p-4 rounded-xl flex-col justify-center items-center drop-shadow-lg blue-md">
             <h2 className="text-center text-slate-200">{name}</h2>
+            <button onClick={() => removePokemon(pokemon)}>X</button>
             <Image
                 priority
                 src={sprite}
