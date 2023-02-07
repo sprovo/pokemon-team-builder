@@ -13,3 +13,27 @@ export const PokedexEntry = `
 		name: String!
 	},
 `;
+
+export const PokemonTypes = `
+	type PokemonType {
+		name: String!
+		url: String!
+	}
+
+	type PokemonTypes {
+		count: Int!
+		types: [PokemonType]!
+	}
+`;
+
+export const PokemonGameGenerations = `
+	type GameGeneration {
+		name: String!
+		url: String!
+	}
+
+	type PokemonGameGenerations {
+		count: Int!
+		generations: [GameGeneration]!
+	}
+`;

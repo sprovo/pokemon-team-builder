@@ -5,5 +5,9 @@ export const pokemonResolvers = {
             const pokemon = await models.Pokemon.getPokemon(name);
             return pokemon;
         },
+        getPokemonTypes: async (_, __, { models }) => {
+            const pokemonTypes = await models.Pokemon.getPokemonTypes();
+            return pokemonTypes;
+        },
     },
 };
