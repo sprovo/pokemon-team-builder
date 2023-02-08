@@ -3,14 +3,7 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 
 import { generatePokemonUtils } from './models/PokemonUtils.js';
 import { generatePokemonModel } from './models/Pokemon.js';
-import { pokemonUtilResolvers } from './resolvers/pokemonUtils.js';
-import { pokemonResolvers } from './resolvers/pokemon.js';
-import {
-    Pokemon,
-    PokedexEntry,
-    PokemonTypes,
-    PokemonGameGenerations,
-} from './schema.js';
+import { typeDefs, resolvers } from './schema.js';
 
 // Server context
 export const context = {
@@ -25,29 +18,8 @@ export const context = {
 // Server initializer
 export function createApolloServer(httpServer) {
     const server = new ApolloServer({
-        typeDefs: `
-            ${Pokemon}
-            ${PokedexEntry}
-            ${PokemonTypes}
-            ${PokemonGameGenerations}
-
-            type Query {
-                getPokemon(name: String): Pokemon
-                getNationalPokedex: [PokedexEntry]
-                getPokemonTypes: PokemonTypes
-                getGameGenerations: PokemonGameGenerations
-            }
-        `,
-        resolvers: {
-            Query: {
-                getPokemon: pokemonResolvers.Queries.getPokemon,
-                getNationalPokedex:
-                    pokemonUtilResolvers.Queries.getNationalPokedex,
-                getPokemonTypes: pokemonResolvers.Queries.getPokemonTypes,
-                getGameGenerations:
-                    pokemonUtilResolvers.Queries.getGameGenerations,
-            },
-        },
+        typeDefs,
+        resolvers,
         plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     });
     return server;

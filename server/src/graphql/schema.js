@@ -1,39 +1,23 @@
-export const Pokemon = `
-	type Pokemon {
-		name: String!
-		order: Int
-		sprite: String
-		types: [String!]
-	}
-`;
+import { Pokemon } from './typedefs/pokemon.js';
+import { PokedexEntry } from './typedefs/pokedexEntry.js';
+import { PokemonGameGenerations } from './typedefs/pokemonGeneration.js';
+import { PokemonTypes } from './typedefs/pokemonType.js';
+import { pokemonResolvers } from './resolvers/pokemon.js';
+import { pokemonUtilResolvers } from './resolvers/pokemonUtils.js';
 
-export const PokedexEntry = `
-	type PokedexEntry {
-		entryNumber: Int!
-		name: String!
-	},
-`;
+// An empty `type Query` is defined so each following type can extend it.
+// This collocation allows for easier maintenance of types & their associated queries/mutations.
+export const typeDefs = [
+    `type Query`,
+    Pokemon,
+    PokedexEntry,
+    PokemonTypes,
+    PokemonGameGenerations,
+];
 
-export const PokemonTypes = `
-	type PokemonType {
-		name: String!
-		url: String!
-	}
-
-	type PokemonTypes {
-		count: Int!
-		types: [PokemonType]!
-	}
-`;
-
-export const PokemonGameGenerations = `
-	type GameGeneration {
-		name: String!
-		url: String!
-	}
-
-	type PokemonGameGenerations {
-		count: Int!
-		generations: [GameGeneration]!
-	}
-`;
+export const resolvers = {
+    Query: {
+        ...pokemonResolvers.Queries,
+        ...pokemonUtilResolvers.Queries,
+    },
+};
