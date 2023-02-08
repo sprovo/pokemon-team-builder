@@ -1,15 +1,22 @@
 import { redisClient, DEFAULT_EXPIRATION } from '../services/redis.js';
 
+import fetchAsync from './fetchAsync.js';
+
 export async function checkCache(key, callback) {
-    const data = await redisClient.get(key);
-    if (data) {
-        return JSON.parse(data);
+    const cachedData = await redisClient.get(key);
+    if (cachedData) {
+        return JSON.parse(cachedData);
     }
 
-    // Fetches data via callback and sets the return to cache
-    const { data: fetchPayload } = await callback();
-    await redisClient.set(key, JSON.stringify(fetchPayload), {
+    const [data, error] = await fetchAsync(callback);
+
+    if (error) {
+        return { success: false, error };
+    }
+
+    await redisClient.set(key, JSON.stringify(data), {
         NX: DEFAULT_EXPIRATION,
     });
-    return fetchPayload;
+
+    return data;
 }

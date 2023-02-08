@@ -1,6 +1,6 @@
-export default async function (promise) {
+export default async function (callback) {
     try {
-        const data = await promise;
+        const data = await callback();
         return [data, null];
     } catch (error) {
         return [null, error];

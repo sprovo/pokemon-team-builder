@@ -1,43 +1,35 @@
 import axios from 'axios';
 
-import { db } from '../../db.js';
-import { checkCache } from '../../utils/checkCache.js';
-import fetchAsync from '../../utils/fetchAsync.js';
+import { db } from '../../lib/db.js';
 import parsePokemonObject from '../../utils/parsePokemonObject.js';
+import { checkCache } from '../../utils/checkCache.js';
 
 export function generatePokemonModel() {
     return {
         getPokemon: async (name) => {
-            const pokemonPromise = new Promise((resolve, reject) => {
-                axios(`${db.pokemon}/${name}`)
-                    .then((payload) => resolve(payload))
-                    .catch((err) => reject(err));
-            });
-
-            const [{ data: pokemon }, pokemonError] = await fetchAsync(
-                pokemonPromise,
+            const cachedPokemon = await checkCache(
+                `pokemon:${name}`,
+                async () => {
+                    const { data: pokemon } = await axios.get(
+                        `${db.pokemon}/${name}`,
+                    );
+                    return parsePokemonObject(pokemon);
+                },
             );
 
-            if (pokemonError) {
-                return pokemonError;
+            if (cachedPokemon?.success === false) {
+                return cachedPokemon?.error;
             }
 
-            // Parse the pokemon object into the shape containing what we need
-            const parsedPokemon = parsePokemonObject(pokemon);
-
-            if (!parsedPokemon) {
-                return undefined;
-            }
-
-            return parsedPokemon;
+            return cachedPokemon;
         },
         getPokemonTypes: async () => {
-            const typesCached = await checkCache('pokemonTypes', async () => {
+            const fetchedTypes = await checkCache('pokemonTypes', async () => {
                 const data = await axios(`${db.types}`).catch((err) => err);
                 return data;
             });
 
-            if (!typesCached) {
+            if (fetchedTypes?.success === false) {
                 // TODO: Handle Error
                 console.error('Pokemon types cannot be found.');
                 return {
@@ -47,8 +39,8 @@ export function generatePokemonModel() {
             }
 
             const types = {
-                count: typesCached?.count || 0,
-                types: typesCached?.results || [],
+                count: fetchedTypes?.count || 0,
+                types: fetchedTypes?.results || [],
             };
 
             return types;

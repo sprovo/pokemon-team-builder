@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { db } from '../../db.js';
+import { db } from '../../lib/db.js';
 import { checkCache } from '../../utils/checkCache.js';
 import { parsePokedexEntry } from '../../utils/parsePokedexEntry.js';
 
