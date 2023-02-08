@@ -2,7 +2,7 @@ import { redisClient, DEFAULT_EXPIRATION } from '../services/redis.js';
 
 import fetchAsync from './fetchAsync.js';
 
-export async function checkCache(key, callback) {
+export async function checkCache(key, callback, expire = DEFAULT_EXPIRATION) {
     const cachedData = await redisClient.get(key);
     if (cachedData) {
         return JSON.parse(cachedData);
@@ -15,7 +15,7 @@ export async function checkCache(key, callback) {
     }
 
     await redisClient.set(key, JSON.stringify(data), {
-        NX: DEFAULT_EXPIRATION,
+        NX: expire,
     });
 
     return data;
