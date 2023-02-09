@@ -11,14 +11,18 @@ import { Searchfield } from '../src/components/SearchField';
 
 export default function Home() {
     const [pokemonTeam, setPokemonTeam] = useState([]);
-    const [loadPokemon, { called, loading, data }] = useLazyQuery(GET_POKEMON);
+    const [loadPokemon, { called, loading, data }] = useLazyQuery(GET_POKEMON, {
+        fetchPolicy: 'cache-and-network',
+    });
     const isFullTeam = pokemonTeam.length === 6;
 
     function searchPokemon(name) {
-        console.log(name, isFullTeam);
+        if (isFullTeam) return;
 
-        // if (isFullTeam) return;
-        // loadPokemon({ variables: { name: name.toLowerCase() } });
+        // TODO: Check if pokemon is already in team
+        // TODO: Handle error: [name] is already in your team.
+
+        loadPokemon({ variables: { name: name.toLowerCase() } });
     }
 
     function removePokemon(pokemon) {
@@ -30,12 +34,15 @@ export default function Home() {
     }
 
     useEffect(() => {
-        if (data && !isFullTeam) {
+        if (!loading && data && !isFullTeam) {
+            // TODO: Check if pokemon is already in team
+            // TODO: Handle error: [name] is already in your team.
+
             // TODO: stash pokemon in teams list in local storage
             // ie: { game: 'Scarlet', team: pokemonTeam }
             setPokemonTeam([...pokemonTeam, data.getPokemon]);
         }
-    }, [data]);
+    }, [loading]);
 
     return (
         <Layout>
