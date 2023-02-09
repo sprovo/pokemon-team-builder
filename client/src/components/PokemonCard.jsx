@@ -1,5 +1,6 @@
-import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
 import Image from 'next/image';
+
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
 export function PokemonCard({ pokemon, removePokemon }) {
     const { name, order, sprite, types = [] } = pokemon;

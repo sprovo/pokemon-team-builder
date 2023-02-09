@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_NATIONAL_POKEDEX } from '@/graphql/queries/getNationalPokedex';
-import { useDebounce } from '@/hooks/useDebounce';
-import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
+
+import { GET_NATIONAL_POKEDEX } from '../graphql/queries/getNationalPokedex';
+import { useDebounce } from '../hooks/useDebounce';
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
 export function Searchfield({ searchPokemon, disabled }) {
     const [nationalPokedex, setNationalPokedex] = useState([]);
@@ -33,6 +34,8 @@ export function Searchfield({ searchPokemon, disabled }) {
     }
 
     function handleSearchItemClick(name) {
+        console.log('name', name);
+
         searchPokemon(name);
         clearSearchInput();
     }
